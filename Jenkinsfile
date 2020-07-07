@@ -19,7 +19,11 @@ node {
          * For this example, we're using a Volkswagen-type approach ;-) */
 
         app.inside {
-            sh 'echo "Tests passed"'
+	    sh 'echo "Run container and test access "'
+                sh '''
+                    docker run -d -p 8060:80 doliva/vote:latest
+                    curl -I localhost:8060 -m 2
+                '''
         }
     }
 
