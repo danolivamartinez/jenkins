@@ -21,16 +21,16 @@ node {
     }
 
     stage('Test image') {
-        /* Ideally, we would run a test framework against our image.
-         * For this example, we're using a Volkswagen-type approach ;-) */
-
         app.inside {
-	    sh 'echo "Run container and test access "'
+	    # sh 'echo "Run container and test access "'
                 sh '''
-		    /usr/bin/docker run -d \
-		    -v /var/jenkins_home:/opt/bitnami/jenkins/jenkins_home \
+		    docker run -d \
+		    --rm \
+		    -u root \
+	     	    -p 8060:80 \
+		    -v "$PWD":/opt/bitnami/jenkins/jenkins_home \
 		    -v /var/run/docker.sock:/var/run/docker.sock \
-		    -p 8060:80 doliva/vote:latest
+		    doliva/vote:latest
 
 		    /bin/sleep 0.2
 
@@ -41,7 +41,7 @@ node {
 		    /usr/bin/docker rm $(/usr/bin/docker ps -a -q)
 
                 '''
-	    sh 'echo "Test validated. Delete environment "'
+	    # sh 'echo "Test validated. Delete environment "'
         }
     }
 
