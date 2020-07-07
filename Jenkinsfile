@@ -21,8 +21,8 @@ node {
         app.inside {
 	    sh 'echo "Run container and test access "'
                 sh '''
-                    docker run -d -p 8060:80 doliva/vote:latest
-                    curl -I localhost:8060 -m 2
+                    /usr/bin/docker run -d -p 8060:80 doliva/vote:latest
+                    /usr/bin/curl -I localhost:8060 -m 2
                 '''
         }
     }
