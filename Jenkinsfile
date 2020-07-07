@@ -14,6 +14,12 @@ node {
         app = docker.build("doliva/vote")
     }
 
+
+    stage('Initialize') {
+        def dockerHome = tool 'myDocker'
+        env.PATH = "${dockerHome}/bin:${env.PATH}"
+    }
+
     stage('Test image') {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
